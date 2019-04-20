@@ -69,6 +69,14 @@ class Train
     @carriages.each { |carriage| yield carriage }
   end
 
+  def attach_carriage(carriage)
+    @carriages << carriage if type == carriage.type && !@carriages.include?(carriage) && @speed.zero?
+  end
+
+  def detach_carriage(carriage)
+    @carriages.delete(carriage) if type == carriage.type && @carriages.include?(carriage) && @speed.zero?
+  end
+
   private
 
   def validate!
