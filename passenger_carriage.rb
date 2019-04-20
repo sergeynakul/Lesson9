@@ -1,6 +1,8 @@
 class PassengerCarriage
   include Produser
+
   attr_reader :type, :taken_places
+
   def initialize(quantity)
     @quantity = quantity
     @type = :passenger

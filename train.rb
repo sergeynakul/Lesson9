@@ -2,18 +2,28 @@ class Train
   include Produser
   include InstanceCounter
   include Validation
+
   attr_accessor :speed
   attr_reader :carriages, :type, :number
-  @@trains = {}
 
   NUMBER_FORMAT = /[a-zа-я0-9]{3}\-?[a-zа-я0-9]{2}/i.freeze
+
+  @trains = {}
+
+  class << self
+    attr_reader :trains
+
+    def find(number)
+      @trains[number]
+    end
+  end
 
   def initialize(number)
     @number = number
     validate!
     @speed = 0
     @carriages = []
-    @@trains[self.number] = self
+    self.class.trains[number] = self
     register_instance
   end
 
@@ -53,10 +63,6 @@ class Train
 
   def previous_station
     @route.stations[@station_index - 1] if @station_index > 0
-  end
-
-  def self.find(number)
-    @@trains[number]
   end
 
   def each_carriage

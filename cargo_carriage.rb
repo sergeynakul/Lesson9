@@ -1,6 +1,8 @@
 class CargoCarriage
   include Produser
+
   attr_reader :type, :current_fill_volume
+
   def initialize(volume)
     @volume = volume
     @type = :cargo

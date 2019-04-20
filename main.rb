@@ -259,16 +259,16 @@ end
 
 main = Main.new
 # seeds
-# irpen = Station.new("Irpen")
-# kiev = Station.new("Kiev")
-# borispol = Station.new("Borispol")
+# irpen = Station.new('Irpen')
+# kiev = Station.new('Kiev')
+# borispol = Station.new('Borispol')
 # main.all_stations << irpen << kiev << borispol
 # p main.all_stations
 # irpen_borispol = Route.new(irpen, borispol)
 # irpen_borispol.add_station(kiev)
 # main.routes << irpen_borispol
 # p main.routes
-# pobeda = PassengerTrain.new("123-12")
+# pobeda = PassengerTrain.new('123-12')
 # main.trains << pobeda
 # p main.trains
 # pobeda.take_route(irpen_borispol)
