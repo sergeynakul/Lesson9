@@ -4,7 +4,7 @@ class Train
   include Validation
   attr_accessor :speed
   attr_reader :carriages, :type, :number
-  @trains = {}
+  @@trains = {}
 
   NUMBER_FORMAT = /[a-zа-я0-9]{3}\-?[a-zа-я0-9]{2}/i.freeze
 
@@ -13,7 +13,7 @@ class Train
     validate!
     @speed = 0
     @carriages = []
-    self.class.trains[self.number] = self
+    @@trains[self.number] = self
     register_instance
   end
 
@@ -56,7 +56,7 @@ class Train
   end
 
   def self.find(number)
-    self.class.trains[number]
+    @@trains[number]
   end
 
   def each_carriage
