@@ -1,6 +1,7 @@
 class Station
   include InstanceCounter
   include Validation
+  include Acсessors
 
   attr_reader :trains, :name
 
