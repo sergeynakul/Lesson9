@@ -5,6 +5,9 @@ class Station
 
   attr_reader :trains, :name
 
+  validate :name, :presence
+  validate :name, :type, String
+
   @stations = []
 
   class << self
@@ -37,11 +40,5 @@ class Station
 
   def each_train
     @trains.each { |train| yield train }
-  end
-
-  private
-
-  def validate!
-    raise 'Стания не может быть без названия' if name.empty?
   end
 end

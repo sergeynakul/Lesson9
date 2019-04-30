@@ -30,7 +30,6 @@ class Route
     raise 'Начальная станция не может быть конечной' if @stations[0] == @stations[-1]
   end
 
-  # the client doesn't need to call it, is called from the method delete_station
   def check_station(station)
     station != @stations.first && station != @stations.last
   end

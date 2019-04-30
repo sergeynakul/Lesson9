@@ -23,6 +23,7 @@ module Acсessors
       define_method(name) { instance_variable_get(var_name) }
       define_method("#{name}=".to_sym) do |value|
         raise TypeError unless value.is_a? class_name
+
         instance_variable_set(var_name, value)
       end
     end

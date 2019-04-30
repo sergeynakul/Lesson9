@@ -8,6 +8,9 @@ class Train
 
   NUMBER_FORMAT = /[a-zа-я0-9]{3}\-?[a-zа-я0-9]{2}/i.freeze
 
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
+
   @trains = {}
 
   class << self
@@ -75,12 +78,5 @@ class Train
 
   def detach_carriage(carriage)
     @carriages.delete(carriage) if type == carriage.type && @carriages.include?(carriage) && @speed.zero?
-  end
-
-  private
-
-  def validate!
-    raise ArgumentError, 'Поезд не может быть без номера' if number == ''
-    raise ArgumentError, 'Не верный формат номера поезда' if number !~ NUMBER_FORMAT
   end
 end
