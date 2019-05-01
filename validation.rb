@@ -18,9 +18,7 @@ module Validation
       @validates = self.class.instance_variable_get(:@validates)
       @validates.each do |validate|
         value = instance_variable_get("@#{validate[:variable]}")
-        validate_presence(value) if validate[:type] == :presence
-        validate_format(value, validate[:args]) if validate[:type] == :format
-        validate_type(value, validate[:args]) if validate[:type] == :type
+        send("validate_#{validate[:type]}", value, *validate[:args])
       end
     end
 
