@@ -5,20 +5,23 @@ module Validation
   end
 
   module ClassMethods
-    attr_reader :presence, :format, :type
+    attr_reader :validates
 
     def validate(name, type, *args)
-      @presence = name if type == :presence
-      @format = name, args if type == :format
-      @type = name, args if type == :type
+      @validates ||= []
+      @validates << { variable: name, type: type, args: args[0] }
     end
   end
 
   module InstanceMethods
     def validate!
-      validate_presence(instance_variable_get("@#{self.class.presence}")) if self.class.presence
-      validate_format(instance_variable_get("@#{self.class.format[0]}"), self.class.format[1]) if self.class.format
-      validate_type(instance_variable_get("@#{self.class.type[0]}"), self.class.type[1]) if self.class.type
+      @validates = self.class.instance_variable_get(:@validates)
+      @validates.each do |validate|
+        value = instance_variable_get("@#{validate[:variable]}")
+        validate_presence(value) if validate[:type] == :presence
+        validate_format(value, validate[:args]) if validate[:type] == :format
+        validate_type(value, validate[:args]) if validate[:type] == :type
+      end
     end
 
     def validate_presence(value)
@@ -26,11 +29,11 @@ module Validation
     end
 
     def validate_format(value, regex)
-      raise ArgumentError, 'Неверный формат' if value !~ regex.first
+      raise ArgumentError, 'Неверный формат' if value !~ regex
     end
 
     def validate_type(value, type_class)
-      raise ArgumentError, 'Неверный класс' unless value.is_a? type_class.first
+      raise ArgumentError, 'Неверный класс' unless value.is_a? type_class
     end
 
     def valid?
